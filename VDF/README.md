@@ -7,195 +7,258 @@
 
 ## Lec 2
 
-* Fabrication
-    * Silicon Ingot
-    * Czochralski Process
-    * packaged dies = chips
-* designing vs fabrication
-* Business model
-    * fabless design companies
-    * merchant foundries
-    * integrated device manufacturers
-* process design kit
-* VLSI Design flow based on the type of ICs
-    * scope of application
-        * ASIC
-        * General Purpose IC
-    * Design styles
-        * fully custom
-        * standard cell based
-        * fpga based
-* Economics of IC
-    * Fixed Product cost
-    * Variable Product cost
-* Figure of Merits
-    * Power
-    * Performance
-    * Area
+
+### Fabrication
+
+* Silicon Ingot
+* Czochralski Process
+* packaged dies = chips
+
+> designing vs fabrication
+
+### Business model
+
+* fabless design companies
+* merchant foundries
+* integrated device manufacturers
+
+> process design kit
+
+### VLSI Design flow based on the type of ICs
+
+#### scope of application
+
+* ASIC
+* General Purpose IC
+
+#### Design styles
+
+* Fully custom
+* Standard cell based
+* Fpga based
+
+#### Economics of IC
+
+* Fixed Product cost
+* Variable Product cost
+
+#### Figure of Merits
+
+* Power
+* Performance
+* Area
 
 ## Lec 3
 
-* RTL = register transfer logic
-* GDS = graphical database system
-* Flow
-    * pre-RTL: system level / architectural design
-        * specification
-        * partitioning
-        * behaviour synthesis
-    * RTL to GDS: logic gates, layout level transistor
-    * post-GDS: fabrication
-* why abstraction?
-    * to reduce turn-around time
-        * it is the time taken to make any changes in the design
+| abbr | full form                 |
+| ---  | ---                       |
+| RTL  | register transfer logic   |
+| GDS  | graphical database system |
+
+### Flow
+
+* pre-RTL: system level / architectural design
+    * specification
+    * partitioning
+    * behaviour synthesis
+* RTL to GDS: logic gates, layout level transistor
+* post-GDS: fabrication
+
+### Why abstraction in design?
+
+* To reduce turn-around time
+    * turn-around time  is the time taken to make any changes in the design
+ 
 * Post silicon validation is used to verify fabricated chips
 * pre-RTL methodology = system level design (ADDV)
-* Hardware-Software partitioning
-    * Hardware
-        * can run parallely
-        * high performance
-    * Software
-        * easy to customize
-        * lower turn around time
-        * low risk
-        * lower development time
-        * ran on a general purpose cpu = slow
-    * profilers are used to analyze timing of our implementation and find
-      out bottlenecks. eg: gprof for software
-* RTL: describes data flow between registers
-    * control path: steers data to different blocks
-    * data path: contains ALU
-    * FSM generates control signals
-    * computation is done on data path
-    * MUX passes data based on control signals
-* Functional specification
-    * can be at a higher level of abstraction
-* Reusing RTL
-* Intellectual property
-    * pre verified and pre designed subsystems
-* Behavioural synthesis
-    * converting design implemented in algorithm to design in RTL
-    * C/C++/MATLAB + constraints + library -> RTL
-    * aka high level synthesis or electronic level synthesis
+
+### Hardware-Software partitioning
+
+
+#### Hardware
+
+* can run parallely
+* high performance
+
+#### Software
+
+* easy to customize
+* lower turn around time
+* low risk
+* lower development time
+* ran on a general purpose cpu = slow
+
+> profilers are used to analyze timing of our implementation and find
+  out bottlenecks. eg: gprof for software
+
+### RTL
+
+* describes data flow between registers
+* control path: steers data to different blocks
+* data path: contains ALU
+* FSM generates control signals
+* computation is done on data path
+* MUX passes data based on control signals
+
+### Functional specification
+
+* can be at a higher level of abstraction
+
+### Intellectual property
+
+* pre verified and pre designed subsystems
+
+### Behavioural synthesis
+
+* converting design implemented in algorithm to design in RTL
+* C/C++/MATLAB + constraints + library -> RTL
+* aka high level synthesis or electronic level synthesis
 
 ## Lec 4
 
-* Behaviour synthesis continued:
-    * Cost metrics
-        * Area/resource
-        * Latency
-        * Worst case combinational delay
-    * Clock speed is important
-        * same number of instructions can be executed faster in a system with
-          higher clock frequency
-        * determined by the worst case combinational delay
-    * Sequentially adjacent flip flop
-        * only combinational ckt in between
-        * launching ff -> capturing ff
-    * Sequential: output depends on past sequences of input along with current
-      one whereas combinational only depends on present input
-    * Critical path delay
-        * worst case delay between 2 sequentially adjacent flip flops
-        * note that it is a purely combinational path
-        * clock period should be greater than this for a system to function
-          properly
-    * the tool tries all possible combinations for a specific function and
-      picks the one with the most favourable cost metrics
-    * converts untimed into timed behaviour
-    * once the constraints are met, which parameter should be optimized by
-      the designer?
-        * depends on which parameter can be accurately estimated at that
-          higher abstraction level
-        * in general area is easier to estimate whereas power and timing
-          are difficult
-    * merits of behavioural synthesis
-        * automatic exploration of all possible combinations which would be
-          hard in handrawn RTL
-        * reduces design effort
-        * manual handwritten RTL has chances of error
-        * gives better FoMs (typically)
-        * estimates area and timing (though timing may not be accurate)
-* Verification of generated RTL is very difficult since tools are not that
+### Behaviour synthesis continued:
+
+#### Cost metrics
+
+* Area/resource
+* Latency
+* Worst case combinational delay
+
+#### Clock speed is important
+
+* same number of instructions can be executed faster in a system with
+  higher clock frequency
+* determined by the worst case combinational delay
+
+#### Sequentially adjacent flip flop
+
+* only combinational ckt in between
+* launching ff -> capturing ff
+* Sequential: output depends on past sequences of input along with current
+  one whereas combinational only depends on present input
+
+#### Critical path delay
+
+* worst case delay between 2 sequentially adjacent flip flops
+* note that it is a purely combinational path
+* clock period should be greater than this for a system to function
+  properly
+
+> the tool tries all possible combinations for a specific function and
+  picks the one with the most favourable cost metrics
+> 
+> converts untimed into timed behaviour
+
+#### Once the constraints are met, which parameter should be optimized by the designer?
+
+* depends on which parameter can be accurately estimated at that
+  higher abstraction level
+* in general area is easier to estimate whereas power and timing
+  are difficult
+
+#### Merits of behavioural synthesis
+
+* automatic exploration of all possible combinations which would be
+  hard in handrawn RTL
+* reduces design effort
+* manual handwritten RTL has chances of error
+* gives better FoMs (typically)
+* estimates area and timing (though timing may not be accurate)
+
+> Verification of generated RTL is difficult since tools are not that
   advanced yet
 
+> [!NOTE]
 > Pre RTL flow completed
 
 * RTL --(logic synthesis)--> Netlist --(physical design)--> GDS
 * netlist is an inter-connection of logic gates
 
-* Common terms
-    * design: top level entity representing the circuit
-    * ports: interfaces of design with which it interacts with the external
-      world
-        * input
-        * output
-        * inout
-        * primary input
-        * primary output
-    * cells: basic entity delivering combinational or sequential functions
-      in a library
-      
-    * design = multiple cells connected together
-    * instances = cells when used inside a design
-    * pin = interface of a library cell or instance through which it
-      communicates with other components
-        * input
-        * output
-        * library pin
-        * instance pin
-    * net = wire that connects different instances and ports
-* RTL and Netlist are equivalent but not equal
-    * RTL have dont-care's and hence have more degree of freedom
-    * RTL are hand written by humans whereas netlist is generated by tools
+### Common terms
+
+* **design**: top level entity representing the circuit
+* **ports**: interfaces of design with which it interacts with the external
+  world
+    * input
+    * output
+    * inout
+    * primary input
+    * primary output
+* **cells**: basic entity delivering combinational or sequential functions
+  in a library
+> design = multiple cells connected together
+* **instances**: cells when used inside a design
+* **pin**: interface of a library cell or instance through which it
+  communicates with other components
+    * input
+    * output
+    * library pin
+    * instance pin
+* **net**: wire that connects different instances and ports
+
+### RTL and Netlist are equivalent but not equal
+
+* RTL have dont-care's and hence have more degree of freedom
+* RTL are hand written by humans whereas netlist is generated by tools
 
 ## Lec 5
 
-* Physical Design: netlist -> GDS
-    * Tools: Synopsys IC Compiler, Cadence Innovus, OpenRoad
-    * Chip Planning -> Placement -> Clock Tree Synthesis -> Global Routing
-      -> Detailed Routing -> Engineering Change Order -> Write GDS
 
-* Chip Planning
-    * Partitioning big design into subsystems / blocks
-    * Arrange the blocks on the chip
-    * Allocate area for stand and cells / memory / macros
-    * IO Cell planning and power planning
+### Physical Design: netlist -> GDS
 
-* Placement
-    * Decides the location of standard cells (not manually)
-    * Total wire length should be minimized (based on estimation)
-    * Ensure timing is met because it tries to reduce delay of criticial
-      path
-    * Ensures no congestion
+* Tools: Synopsys IC Compiler, Cadence Innovus, OpenRoad
+* Chip Planning -> Placement -> Clock Tree Synthesis -> Global Routing
+  -> Detailed Routing -> Engineering Change Order -> Write GDS
 
-* Clock Tree Synthesis (CTS)
-    * Adds buffers or pairs of inverters
-    * Decides clock topology
-    * how clock reaches all clocked blocks
-    * wires clock network  avoiding detours
-    * this is the 1st level at which we do wiring because clock is the most
-      critical part
-    * Ensure minimum skew (difference between clock arrival time at two
-      different places in the circuit)
-    * Minimize power dissipation
-        * Clock network consumes a lot of power
 
-* Routing
-    * Creates wire layout for all the nets (other than power supply and
-      clock)
-    * refers to the netlist (no newer connection is added)
-    * Minimize wire length routing area, number of vias, etc 
-        * Vias have larger delays than wires
-        * Can cause reliability issues and extra delays
-    * Routing is very complicated and hence divided into 2 parts
+#### 1. Chip Planning
 
-    * Global Routing
-        * Planning stage only
-        * Actual layout of wires not created
-        * Routing plan for a given net is created
-        * Entire region is partitioned into tiles called global bins
+* Partitioning big design into subsystems / blocks
+* Arrange the blocks on the chip
+* Allocate area for stand and cells / memory / macros
+* IO Cell planning and power planning
 
-    * Detailed Routing
-        * decides actual layout of each net in the pre-assigned global bins
-        * lower level of abstraction wrt global routing
-        * allocates wires on each metal layer
-        * vias for switching between layers
+#### 2. Placement
+
+* Decides the location of standard cells (not manually)
+* Total wire length should be minimized (based on estimation)
+* Ensure timing is met because it tries to reduce delay of criticial
+  path
+* Ensures no congestion
+
+#### 3. Clock Tree Synthesis (CTS)
+
+* Adds buffers or pairs of inverters
+* Decides clock topology
+* how clock reaches all clocked blocks
+* wires clock network  avoiding detours
+* this is the 1st level at which we do wiring because clock is the most
+  critical part
+* Ensure minimum skew (difference between clock arrival time at two
+  different places in the circuit)
+* Minimize power dissipation
+    * Clock network consumes a lot of power
+
+#### 4. Routing
+
+* Creates wire layout for all the nets (other than power supply and
+  clock)
+* refers to the netlist (no newer connection is added)
+* Minimize wire length routing area, number of vias, etc 
+    * Vias have larger delays than wires
+    * Can cause reliability issues and extra delays
+* Routing is very complicated and hence divided into 2 parts
+
+##### 4a) Global Routing
+
+* Planning stage only
+* Actual layout of wires not created
+* Routing plan for a given net is created
+* Entire region is partitioned into tiles called global bins
+
+##### 4b) Detailed Routing
+
+* decides actual layout of each net in the pre-assigned global bins
+* lower level of abstraction wrt global routing
+* allocates wires on each metal layer
+* vias for switching between layers
