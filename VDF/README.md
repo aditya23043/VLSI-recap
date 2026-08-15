@@ -3,10 +3,9 @@
 ## Lec 1
 
 * Photolithography
-    * Mask
+  * Mask
 
 ## Lec 2
-
 
 ### Fabrication
 
@@ -58,22 +57,21 @@
 ### Flow
 
 * pre-RTL: system level / architectural design
-    * specification
-    * partitioning
-    * behaviour synthesis
+  * specification
+  * partitioning
+  * behaviour synthesis
 * RTL to GDS: logic gates, layout level transistor
 * post-GDS: fabrication
 
 ### Why abstraction in design?
 
 * To reduce turn-around time
-    * turn-around time  is the time taken to make any changes in the design
+  * turn-around time  is the time taken to make any changes in the design
  
 * Post silicon validation is used to verify fabricated chips
 * pre-RTL methodology = system level design (ADDV)
 
 ### Hardware-Software partitioning
-
 
 #### Hardware
 
@@ -116,7 +114,7 @@
 
 ## Lec 4
 
-### Behaviour synthesis continued:
+### Behaviour synthesis continued
 
 #### Cost metrics
 
@@ -146,7 +144,8 @@
 
 > the tool tries all possible combinations for a specific function and
   picks the one with the most favourable cost metrics
-> 
+>
+>
 > converts untimed into timed behaviour
 
 #### Once the constraints are met, which parameter should be optimized by the designer?
@@ -179,21 +178,23 @@
 * **design**: top level entity representing the circuit
 * **ports**: interfaces of design with which it interacts with the external
   world
-    * input
-    * output
-    * inout
-    * primary input
-    * primary output
+  * input
+  * output
+  * inout
+  * primary input
+  * primary output
 * **cells**: basic entity delivering combinational or sequential functions
   in a library
+
 > design = multiple cells connected together
+
 * **instances**: cells when used inside a design
 * **pin**: interface of a library cell or instance through which it
   communicates with other components
-    * input
-    * output
-    * library pin
-    * instance pin
+  * input
+  * output
+  * library pin
+  * instance pin
 * **net**: wire that connects different instances and ports
 
 ### RTL and Netlist are equivalent but not equal
@@ -203,13 +204,11 @@
 
 ## Lec 5
 
-
 ### Physical Design: netlist -> GDS
 
 * Tools: Synopsys IC Compiler, Cadence Innovus, OpenRoad
 * Chip Planning -> Placement -> Clock Tree Synthesis -> Global Routing
   -> Detailed Routing -> Engineering Change Order -> Write GDS
-
 
 #### 1. Chip Planning
 
@@ -237,16 +236,16 @@
 * Ensure minimum skew (difference between clock arrival time at two
   different places in the circuit)
 * Minimize power dissipation
-    * Clock network consumes a lot of power
+  * Clock network consumes a lot of power
 
 #### 4. Routing
 
 * Creates wire layout for all the nets (other than power supply and
   clock)
 * refers to the netlist (no newer connection is added)
-* Minimize wire length routing area, number of vias, etc 
-    * Vias have larger delays than wires
-    * Can cause reliability issues and extra delays
+* Minimize wire length routing area, number of vias, etc
+  * Vias have larger delays than wires
+  * Can cause reliability issues and extra delays
 * Routing is very complicated and hence divided into 2 parts
 
 ##### 4a) Global Routing
@@ -262,3 +261,61 @@
 * lower level of abstraction wrt global routing
 * allocates wires on each metal layer
 * vias for switching between layers
+
+#### 5. Engineering Change Order
+
+* make small final fixes in the design
+
+#### 6. Write GDS
+
+* this is sent to the foundry
+
+### Notes for physical design
+
+* between each step,
+  * there are optimazations done like ppa improvement, buffer insertion, etc
+  * verification is done
+  * constraints should be met
+* this process is iterative, not linear because often tasks do estimation and could be wrong with
+  that estimation and we might need to loop back to an earlier step
+* number of iterations should be minimized
+
+### how does buffer insertion help with timing?
+ 
+```txt
+let
+  r: resistance per unit area
+  c: capacitance per unit area
+  L: total length
+  
+for, L = 10
+delay = RC = rc * L^2 = rc * 100
+
+after adding one buffer, L = 5 
+delay = (rc * 25) * 2 + B 
+which is better than before assuming buffer delay is small
+```
+
+beyond timing, buffer provides power to the line and prevents the signal from dying because it is a
+powered block as well
+
+everything in the design process is a tradeoff
+
+while buffer insertion has advantages, it has additional power consumption as well
+
+### Verification
+
+* used to ensure device performs the intended functionality
+* different from testing; testing is done on the actual chip while verification is done on the
+  design
+* done multiple times after every non trivial change
+
+#### Simulation
+
+* simulate test data or vectors on the RTL design and on a golden model and compare the output
+  response and expected output.
+* versatile but incomplete since covering all cases is impractical
+
+#### Model Checking
+
+
